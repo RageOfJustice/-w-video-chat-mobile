@@ -6,7 +6,12 @@
     "start": "expo start",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "lint": "expo lint",
+    "proto:gen": "protoc --proto_path=./protos --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=./proto --ts_proto_opt=esModuleInterop=true ./protos/*.proto",
+    "proto:update": "git submodule update --remote protos && npm run proto:gen",
+    "postinstall": "git submodule update --init protos",
+    "proto": "protoc --proto_path=$DIR --js_out=import_style=commonjs:proto --grpc-web_out=import_style=typescript,mode=grpcwebtext:proto video_chat.proto"
   },
   "dependencies": {
     "expo": "~54.0.33",
@@ -14,6 +19,9 @@
     "expo-linking": "~8.0.11",
     "expo-router": "~6.0.23",
     "expo-status-bar": "~3.0.9",
+    "expo-video": "~3.0.16",
+    "google-protobuf": "^4.0.2",
+    "grpc-web": "^2.0.2",
     "react": "19.1.0",
     "react-native": "0.81.5",
     "react-native-reanimated": "^4.3.0",
@@ -22,7 +30,12 @@
     "react-native-worklets": "^0.8.1"
   },
   "devDependencies": {
+    "@bufbuild/protobuf": "^2.12.0",
+    "@bufbuild/protoc-gen-connect-web": "^0.11.0",
     "@types/react": "~19.1.0",
+    "eslint": "^9.0.0",
+    "eslint-config-expo": "~10.0.0",
+    "ts-proto": "^2.11.8",
     "typescript": "~5.9.2"
   },
   "private": true
